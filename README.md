@@ -6,7 +6,7 @@ answering customer questions about **domain-related policies**, including
 **domain suspension**, **reinstatement**, and **domain transfer**.
 
 To simulate a realistic support scenario, I created five **synthetic 
-policy documents** that resemble the kind of policy/FAQ content a **domain 
+policy documents** that resemble the kind of policy content a **domain 
 registrar or hosting provider** would publish. The documents cover:
 
 - **Billing and renewal** rules  
@@ -175,6 +175,7 @@ remain **strictly grounded** in its knowledge base.
 
 ```bash
 docker build -t interview-ai .
+```
 
 ### 2. Run the FastAPI app (for testing)
 
