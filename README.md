@@ -47,6 +47,7 @@ creation**, **SEO**, **internal systems**) are intentionally **refused**.
 - **MCP server** (STDIO mode) to demonstrate **MCP-aligned tool design**
 
 
+
 ## 🔐 Model Context Protocol (MCP) Integration
 
 This project follows **MCP principles** by exposing the **RAG logic as a 
@@ -109,4 +110,12 @@ The assistant intentionally **refuses to answer**:
 
 This refusal behavior is a **feature**, not a limitation, and demonstrates 
 **strict context grounding**.
+
+
+## ▶️ How to Run the Project
+
+### 1. Build the Docker image
+
+```bash
+docker build -t interview-ai .
 
