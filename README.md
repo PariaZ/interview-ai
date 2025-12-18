@@ -1,5 +1,26 @@
+## Project Overview and Design Choices
 
-## 🧠 System Architecture
+This project implements a **retrieval-augmented knowledge assistant** for 
+answering customer questions about **domain-related policies**, including 
+**billing and renewal**, **WHOIS validation**, **abuse handling**, 
+**domain suspension**, **reinstatement**, and **domain transfer**.
+
+To simulate a realistic support scenario, I created five **synthetic 
+policy documents** that resemble the kind of policy/FAQ content a **domain 
+registrar or hosting provider** would publish. The documents cover:
+
+- **Billing and renewal** rules  
+- **Suspension and reinstatement** conditions  
+- **WHOIS validation** requirements  
+- **Abuse escalation** and investigation procedures  
+- **Domain transfer** policies  
+
+Even though the documents are synthetic, they are written to closely match 
+what customers would typically read in practice.
+
+---
+
+ ## 🧠 System Architecture
 
 **Core components:**
 
@@ -108,16 +129,14 @@ with:
 
 ## 🚫 Hallucination Prevention
 
-The assistant intentionally **refuses to answer**:
+The assistant is intentionally designed to **refuse** questions that fall 
+outside the retrieved policy context.  
+This includes queries requiring external knowledge, private or 
+account-specific information, or undefined policies.
 
-- Questions about **website performance** (Ex: “Why is my site slow?”)
-- Questions about **account creation or eligibility**
-- Questions about **internal systems**, **SLAs**, or **decision makers**
-- Questions requiring **private or account-specific data**
-- Questions referencing **non-existent policies**
+Refusal behavior is a **deliberate design choice** to ensure strict 
+grounding and prevent hallucination.
 
-This refusal behavior is a **feature**, not a limitation, and demonstrates 
-**strict context grounding**.
 
 ## 🧪 Testing and Evaluation
 
@@ -132,6 +151,7 @@ hallucination.
 This testing strategy demonstrates the robustness of the RAG pipeline, the 
 effectiveness of the MCP-aligned prompt, and the system’s ability to 
 remain **strictly grounded** in its knowledge base.
+
 
 
 ## 🧪 Example Test Questions
@@ -149,8 +169,7 @@ remain **strictly grounded** in its knowledge base.
 - “Who reported my domain for abuse?”
 
 
- ## ▶️ How to Run the 
-Project
+ ## ▶️ How to Run theProject
 
 ### 1. Build the Docker image
 
