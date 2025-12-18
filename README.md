@@ -119,3 +119,23 @@ This refusal behavior is a **feature**, not a limitation, and demonstrates
 ```bash
 docker build -t interview-ai .
 
+### 2. Run the FastAPI app (for testing)
+
+```bash
+docker run --env-file .env -p 8000:8000 interview-ai
+
+```
+
+### 3. Run the MCP server (STDIO mode)
+
+```bash
+docker run --init -it --env-file .env interview-ai python mcp_server.py
+
+```
+
+Open in your browser:
+
+```text
+http://localhost:8000/docs
+
+```
