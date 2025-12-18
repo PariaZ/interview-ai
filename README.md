@@ -1,4 +1,4 @@
- ##📌 Project Overview and Design Choices
+ ## 📌 Project Overview and Design Choices
 
 This project implements a **retrieval-augmented knowledge assistant** for 
 answering customer questions about **domain-related policies**, including 
