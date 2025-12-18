@@ -1,45 +1,31 @@
-# Policy Knowledge Assistant (**RAG + MCP**)
-
-This project implements a **retrieval-augmented knowledge assistant** for 
-answering customer questions about **domain-related policies**, including 
-**billing**, **renewal**, **WHOIS validation**, **abuse handling**, 
-**suspension**, and **reinstatement**.
-
-The system is designed to be **grounded**, **non-hallucinatory**, and 
-**policy-faithful**, following **Model Context Protocol (MCP)** principles 
-with **strict prompt constraints** and **structured JSON outputs**.
-
-## 📌 Scope of Knowledge
-
-The assistant answers questions **only** based on the following **policy 
-documents**:
-
-- **Billing and Renewal Policy**
-- **Domain Suspension Policy**
-- **WHOIS Validation Requirements**
-- **Abuse Escalation Guidelines**
-- **Domain Transfer Policy**
-
-Questions outside this scope (e.g., **website performance**, **account 
-creation**, **SEO**, **internal systems**) are intentionally **refused**.
 
 ## 🧠 System Architecture
 
 **Core components:**
 
 - **RAG pipeline**
-  - Markdown documents are chunked by section (`##`)
-  - Chunks are **embedded** and **indexed using FAISS**
-  - **Top-K** relevant chunks are retrieved per query
+  - Policy documents are written in **Markdown** and chunked primarily by 
+section (`##`)
+  - For long sections, an additional **paragraph-level split** with a soft 
+size limit is applied to preserve semantic coherence
+  - Chunks are **embedded** using OpenAI’s **small embedding model**
+  - All embeddings are **indexed using FAISS** for efficient 
+nearest-neighbor retrieval
+  - **Top-K** relevant chunks are retrieved for each query
 
 - **Prompt-constrained LLM reasoning**
+  - The system uses **GPT-4.1-mini** as the underlying language model, 
+selected to balance **answer quality**, **latency**, and **computational 
+efficiency**
+  - Retrieved chunks are injected into a **strictly constrained prompt**
   - The model is **explicitly restricted** to the retrieved context
   - **Inference and speculation are forbidden**
   - If the context does not explicitly support an answer, the model must 
 **refuse**
 
 - **Structured outputs**
-  - All responses are valid **JSON** with a **fixed schema**
+  - All responses are returned as valid **JSON** with a fixed schema to 
+support determinism and evaluation
 
 **Interfaces:**
 
@@ -54,8 +40,30 @@ This project follows **MCP principles** by exposing the **RAG logic as a
 tool** with a **strict contract**.
 
 ### Prompt Design (**MCP-aligned**)
+The system follows **Model Context Protocol (MCP)** principles through a 
+carefully designed prompt that explicitly defines:
 
-The prompt explicitly defines:
+- the model’s **role** as a policy support assistant,  
+- the **allowed context** (retrieved policy documents only),  
+- the **task** (answering or refusing based on explicit textual support), 
+and  
+- a **strict JSON output schema**.
+
+An **MCP server** is implemented in **STDIO mode** to expose the 
+retrieval-augmented reasoning logic as a tool with a clear input/output 
+contract. No MCP client is required for evaluation; the server is included 
+to demonstrate **MCP-aligned design** and modularity.
+
+The codebase is structured in a **modular and maintainable** way, 
+separating indexing, retrieval, prompting, API handling, and MCP 
+integration. This separation improves **reliability**, **debuggability**, 
+and **extensibility**.
+
+The entire application is containerized using **Docker**, ensuring 
+reproducibility and ease of execution across environments.
+
+ The prompt 
+explicitly defines:
 
 - **Role**
   - You are a **policy support assistant**.
@@ -102,7 +110,7 @@ with:
 
 The assistant intentionally **refuses to answer**:
 
-- Questions about **website performance** (e.g., “Why is my site slow?”)
+- Questions about **website performance** (Ex: “Why is my site slow?”)
 - Questions about **account creation or eligibility**
 - Questions about **internal systems**, **SLAs**, or **decision makers**
 - Questions requiring **private or account-specific data**
@@ -111,8 +119,38 @@ The assistant intentionally **refuses to answer**:
 This refusal behavior is a **feature**, not a limitation, and demonstrates 
 **strict context grounding**.
 
+## 🧪 Testing and Evaluation
 
-## ▶️ How to Run the Project
+A curated set of test questions is used to evaluate the system, including:
+
+- questions that should be answered directly from policy context,  
+- “specific-case” questions where the assistant must summarize 
+**policy-level reasons** without guessing, and  
+- **out-of-scope questions** that must be explicitly refused to prevent 
+hallucination.
+
+This testing strategy demonstrates the robustness of the RAG pipeline, the 
+effectiveness of the MCP-aligned prompt, and the system’s ability to 
+remain **strictly grounded** in its knowledge base.
+
+
+## 🧪 Example Test Questions
+
+**In-scope (answered):**
+
+- “Why was my domain suspended?”
+- “What happens if I don’t verify my WHOIS information?”
+- “My domain was suspended due to a chargeback. What should I do?”
+
+**Out-of-scope (refused):**
+
+- “Why is my website loading slowly?”
+- “What are the policies to have an account?”
+- “Who reported my domain for abuse?”
+
+
+ ## ▶️ How to Run the 
+Project
 
 ### 1. Build the Docker image
 
@@ -180,7 +218,7 @@ capture relationships across documents.
 - For larger corpora and more complex queries, the system could be 
 upgraded to models such as **GPT-4.1** or **GPT-4o**, which are better 
 suited for long-context and multi-step reasoning.
-- More advanced prompt techniques (e.g., **structured or constrained 
+- More advanced prompt techniques (**structured or constrained 
 reasoning flows**) could also be explored, while still preserving **MCP 
 compliance** and safety guarantees.
 
