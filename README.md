@@ -46,6 +46,7 @@ creation**, **SEO**, **internal systems**) are intentionally **refused**.
 - **FastAPI REST endpoint** (for testing and evaluation)
 - **MCP server** (STDIO mode) to demonstrate **MCP-aligned tool design**
 
+
 ## 🔐 Model Context Protocol (MCP) Integration
 
 This project follows **MCP principles** by exposing the **RAG logic as a 
@@ -81,9 +82,11 @@ reasons only**
   "action_required": "none | update_whois | contact_support | 
 escalate_to_abuse_team"
 }
+```
 
 If the context does not clearly support an answer, the system responds 
 with:
+
 
 ```json
 {
@@ -91,6 +94,8 @@ with:
   "references": [],
   "action_required": "none"
 }
+```
+
 
 ## 🚫 Hallucination Prevention
 
