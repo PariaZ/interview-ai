@@ -1,0 +1,36 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.cpython-*
+
+venv/
+env/
+# Virtual environments
+.venv/
+
+# Local Python version (pyenv)
+.python-version
+
+# OS junk
+.DS_Store
+
+# (optional) env files
+.env
+
+# Local secrets
+.env
+
+# OS / editor
+.DS_Store
+.vscode/
+
+# Data / indexes (choose what you want here)
+data/faiss/
+*.faiss
+passages.jsonl
+
+# Logs
+*.log
+

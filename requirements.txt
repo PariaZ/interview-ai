@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+mcp
+openai
+numpy
+pydantic
+faiss-cpu

@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-text-embedding-3-small}
+      KB_DIR: ${KB_DIR:-kb}
+      FAISS_INDEX_PATH: ${FAISS_INDEX_PATH:-data/faiss/index.faiss}
+      PASSAGES_PATH: ${PASSAGES_PATH:-data/faiss/passages.jsonl}
+    volumes:
+      - .:/app
+      - ./data:/app/data
