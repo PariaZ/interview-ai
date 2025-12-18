@@ -169,7 +169,7 @@ remain **strictly grounded** in its knowledge base.
 - “Who reported my domain for abuse?”
 
 
- ## ▶️ How to Runthe Project
+ ## ▶️ How to Ru nthe Project
 
 ### 1. Build the Docker image
 
