@@ -1,4 +1,4 @@
-##📌 Project Overview and Design Choices
+ ##📌 Project Overview and Design Choices
 
 This project implements a **retrieval-augmented knowledge assistant** for 
 answering customer questions about **domain-related policies**, including 
@@ -169,7 +169,7 @@ remain **strictly grounded** in its knowledge base.
 - “Who reported my domain for abuse?”
 
 
- ## ▶️ How to Run theProject
+ ## ▶️ How to Run th eProject
 
 ### 1. Build the Docker image
 
