@@ -139,3 +139,48 @@ Open in your browser:
 http://localhost:8000/docs
 
 ```
+Use POST /query with input:
+
+```json
+
+{
+  "q": "Why was my domain suspended?",
+  "top_k": 3,
+  "max_refs": 1
+}
+
+```
+### 3. Run the MCP server (STDIO mode)
+
+```bash
+ 
+docker run --init -it --env-file .env interview-ai python mcp_server.py
+
+```
+Expected output:
+
+
+
+```text
+MCP server running (stdio). Waiting for client...
+
+```
+
+## 🔮 Future Improvements
+
+- With access to **larger and more realistic policy datasets**, the 
+assistant could support a wider range of questions while still remaining 
+strictly grounded in source documents.
+- Collecting **real user-like sample questions** would make it possible to 
+further **refine the prompts** and improve accuracy, especially for edge 
+cases.
+- As the policy data grows and becomes more **interconnected**, more 
+advanced retrieval approaches such as **GraphRAG** could be used to better 
+capture relationships across documents.
+- For larger corpora and more complex queries, the system could be 
+upgraded to models such as **GPT-4.1** or **GPT-4o**, which are better 
+suited for long-context and multi-step reasoning.
+- More advanced prompt techniques (e.g., **structured or constrained 
+reasoning flows**) could also be explored, while still preserving **MCP 
+compliance** and safety guarantees.
+
